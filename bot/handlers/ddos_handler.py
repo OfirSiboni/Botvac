@@ -1,11 +1,10 @@
-import logging
 import os
 import random
 
 import socket
 import time
 
-from bot.Logger import Logger
+from bot.objects.Logger import Logger
 
 
 class DdosHandler:
