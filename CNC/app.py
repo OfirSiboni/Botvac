@@ -25,7 +25,7 @@ def attack_summary():
      "command_bot_names":"*",
      "start_time": 'Sat Aug 20 00:00:00 2022',
      "end_time": 'Sat Aug 20 00:10:00 2022',
-     "send_to_IP":""}
+     "targets":""}
     return dict
 
 
