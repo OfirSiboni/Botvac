@@ -2,7 +2,9 @@ from flask import Flask, render_template, request
 from flask import jsonify
 import time
 import json
-
+"""
+NOTE: not part of the project, scratch file only.
+"""
 with open('new_file.json', 'w') as f:
     print("The json file is created")
 app = Flask(__name__, static_folder='static')
