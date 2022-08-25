@@ -3,7 +3,9 @@ from flask import jsonify
 import time
 import json
 """
-NOTE: not part of the project, scratch file only.
+PLEASE NOTE:
+this file will run on the cnc - the botnet manager.
+To avoid unnecessary charges and uptime, it is turned off by default. if you want to turn it up - please contact us.
 """
 with open('new_file.json', 'w') as f:
     print("The json file is created")
