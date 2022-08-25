@@ -6,7 +6,6 @@ from urllib.parse import urljoin
 
 from Crypto.PublicKey import RSA
 import requests
-import rsa
 import schedule as schedule
 from rsa import PublicKey
 

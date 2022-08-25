@@ -1,12 +1,11 @@
 class Task:
     def __init__(self, data: dict):
-        self.task_id = data.get("task_id")  # an inner ID for the target
-        self.task_type = data.get("task_type")  # which function should run?
-        self.target = data.get("target")  # attack target
+        self.task_id = data.get("command_ID")  # an inner ID for the target
+        self.task_type = data.get("command_name")  # which function should run?
+        self.target = data.get("targets")  # attack target
         self.target_type = data.get("target_type")  # ip or URL?
         self.start_time = data.get("start_time")
         self.end_time = data.get("end_time")
-        self.answer_server_url = data.get("answer_server_url")
 
     def convert_to_dict(self):
         return {
@@ -16,7 +15,6 @@ class Task:
             "target_type": self.target_type,
             "start_time": self.start_time,
             "end_time": self.end_time,
-            "answer_server_url": self.answer_server_url
         }
 
 
