@@ -63,6 +63,10 @@ def get_public_key():
     r2Fw0cGvIbP5ePwFweMovPbddqUdzAHkcd71qoIqB2I64t8pTuLjTPacslftC0+
     GeQMNBQG2waCNmZHSNrmPykoyOPWuJUdnb2p7O0431GNH/ISP6Rl2T0"""
 
+@app.route("/summary_form")
+def summary_form():
+    return render_template('summary_form.html')
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080 ,debug=True)

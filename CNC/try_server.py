@@ -1,5 +1,5 @@
 from flask import Flask
-import rsa
+#import rsa
 
 app = Flask(__name__)
 public_key,private_key = rsa.newkeys(1024)
@@ -14,6 +14,13 @@ def get_public_key():
 @app.route('/update_last_task',methods=['POST'])
 def update_last_task():
     print(request.form)
+
+
+
+@app.route('/summary_form')
+def summary_form():
+    return "<h1>summary_form</h1>"
+
 
 if __name__ == '__main__':
     app.run(port = 8080)
