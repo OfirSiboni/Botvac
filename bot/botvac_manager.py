@@ -4,9 +4,9 @@ import uuid
 from datetime import datetime
 from urllib.parse import urljoin
 
-from Crypto.PublicKey import RSA
 import requests
 import schedule as schedule
+from Crypto.PublicKey import RSA
 from rsa import PublicKey
 
 from bot.botvac_task_executer import BotvacTaskExecutor
@@ -15,7 +15,7 @@ from bot.objects.task import Task, TaskResult
 
 
 class BotvacManager:
-    SERVER_ADDRESS = os.getenv("BOTVAC_SERVER_URL", "https://example.com")
+    SERVER_ADDRESS = os.getenv("MVP_SERVER_URL", "http://40.118.19.45/")
 
     def __init__(self):
         self.last_task: Task = None
@@ -83,6 +83,7 @@ class BotvacManager:
             self.run_last_task()
 
     def main(self):
+        self.generate_keys()
         schedule.every(self.inverval).seconds.do(self._run_task_routine)
         while True:
             schedule.run_pending()
@@ -90,5 +91,4 @@ class BotvacManager:
 
 if __name__ == '__main__':
     manager = BotvacManager()
-    manager.generate_keys()
-    manager.update_last_task()
+    manager.main()
