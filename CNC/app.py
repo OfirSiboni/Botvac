@@ -70,5 +70,19 @@ def summary_form():
     return render_template('summary_form.html')
 
 
+@app.route("/JSON_created", methods=["POST"])
+def JSON_created():
+     dict={"command_ID":request.form.get('id'),
+     "command_name":request.form.get('name'),
+     "command_type":request.form.get('type'),
+     "command_bot_names":request.form.get('bot_name'),
+     "start_time":request.form.get('start'),
+     "end_time": request.form.get('end'),
+     "targets":request.form.get('targets')}
+     #return jsonify(dict) 
+     return "<h1>Your JSON file was created succesfully</h1>"
+
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080 ,debug=True)
