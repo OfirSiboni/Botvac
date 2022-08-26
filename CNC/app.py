@@ -18,6 +18,8 @@ def hello_world():
 @app.route("/summary")
 def summary():
     d = attack_summary()
+    with open('data.json', 'w') as f:
+        json.dump(d, f)
     return jsonify(d)
 
 def attack_summary():
@@ -49,13 +51,15 @@ def summary_form():
 
 @app.route("/JSON_created", methods=["POST"])
 def JSON_created():
-     dict={"command_ID":request.form.get('id'),
+     d={"command_ID":request.form.get('id'),
      "command_name":request.form.get('name'),
      "command_type":request.form.get('type'),
      "command_bot_names":request.form.get('bot_name'),
      "start_time":request.form.get('start'),
      "end_time": request.form.get('end'),
      "targets":request.form.get('targets')}
+     with open('data.json', 'w') as f:
+        json.dump(d, f)
      #return jsonify(dict) 
      return "<h1>Your JSON file was created succesfully</h1>"
 
