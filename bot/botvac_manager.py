@@ -16,6 +16,7 @@ from bot.objects.task import Task, TaskResult
 
 class BotvacManager:
     SERVER_ADDRESS = os.getenv("MVP_SERVER_URL", "http://40.118.19.45/")
+    INTERVAL = int(os.getenv("BOTVAC_INTERVAL",30))
 
     def __init__(self):
         self.last_task: Task = None
@@ -88,7 +89,7 @@ class BotvacManager:
 
     def main(self):
         self.generate_keys()
-        schedule.every(self.inverval).seconds.do(self._run_task_routine)
+        schedule.every(self.INTERVAL).seconds.do(self._run_task_routine)
         while True:
             schedule.run_pending()
 
