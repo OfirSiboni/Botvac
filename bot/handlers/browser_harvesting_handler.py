@@ -1,7 +1,7 @@
 import typing
 from uuid import uuid4
 
-from bot.objects.Logger import Logger
+from objects.Logger import Logger
 import winreg
 import shutil
 import os
