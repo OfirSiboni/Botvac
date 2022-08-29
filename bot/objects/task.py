@@ -4,6 +4,7 @@ class Task:
         self.task_type = data.get("command_name")  # which function should run?
         self.target = data.get("targets")  # attack target
         self.target_type = data.get("target_type")  # ip or URL?
+        self.bots = data.get("command_bot_names")
         self.start_time = data.get("start_time")
         self.end_time = data.get("end_time")
 
